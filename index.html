@@ -56,13 +56,13 @@
       flex-wrap: wrap;
     }
 
-    .cabecalho-bg ul li a {
+    .cabecalho-bg ul li a:not(.login-button) {
       padding-left: 8px;
       border-left: 4px solid #fff;
       transition: 0.4s ease-in-out;
     }
 
-    .cabecalho-bg ul li a:hover {
+    .cabecalho-bg ul li a:not(.login-button):hover {
       border-left: 4px solid #00527d;
     }
 
@@ -75,6 +75,22 @@
       font-size: 20px;
       font-weight: bold;
       color: #fff;
+    }
+
+    .login-button {
+      background-color: #00527d;
+      padding: 8px 16px;
+      color: white;
+      font-weight: bold;
+      border-left: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.4s ease-in-out;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
+    .login-button:hover {
+      background-color: #003958;
     }
 
     .logo {
@@ -96,8 +112,6 @@
 
     .hero-left {
       width: 65%;
-      /* border-left: 4px solid #0076b6;
-      padding-left: 32px; */
     }
 
     .hero-left h1 {
@@ -510,6 +524,8 @@
         <ul>
           <li><a href="#como-funciona">Como funciona?</a></li>
           <li><a href="#contato">Contato</a></li>
+          <li><a href="https://s.radiomonitor.com.br/new/login.aspx" target="_blank" class="login-button">Login</a>
+          </li>
         </ul>
       </nav>
     </div>
