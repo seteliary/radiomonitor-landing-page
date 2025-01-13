@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <title>Radiomonitor - Criação e gestão de PIs</title>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      list-style: none;
+      text-decoration: none;
+    }
+
+    body {
+      font-family: "Roboto", serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      background-color: #f0f0f0;
+      color: #3B3B3B;
+    }
+
+    .container {
+      max-width: 1080px;
+      width: 100%;
+    }
+
+    .cabecalho-bg {
+      background-color: #0076b6;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+    }
+
+    .cabecalho-bg .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .cabecalho-bg ul li a {
+      padding-left: 8px;
+      border-left: 4px solid #fff;
+      transition: 0.4s ease-in-out;
+    }
+
+    .cabecalho-bg ul li a:hover {
+      border-left: 4px solid #00527d;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 32px;
+    }
+
+    nav ul li a {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .logo {
+      width: 270px;
+    }
+
+    h1,
+    h2 {
+      color: #00527d;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 56px 0;
+    }
+
+    .hero-left {
+      width: 65%;
+      /* border-left: 4px solid #0076b6;
+      padding-left: 32px; */
+    }
+
+    .hero-left h1 {
+      font-size: 32px;
+    }
+
+    .hero-left h1,
+    .hero-left p,
+    h2 {
+      margin-bottom: 16px;
+    }
+
+    .hero-left p {
+      font-size: 20px;
+    }
+
+    .hero-left button {
+      background-color: #0076b6;
+      padding: 12px 32px;
+      color: white;
+      font-weight: bold;
+      margin-top: 16px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: 0.4s ease-in-out;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
+    .hero-left button:hover {
+      background-color: #00527d;
+    }
+
+    .hero-right {
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 250px;
+      height: 250px;
+      background-color: #00527d;
+      border-radius: 50% 70% 90% 50% / 50% 50% 65% 90%;
+      transition: 0.6s ease-in-out;
+    }
+
+    .hero-right:hover {
+      background-color: #0076b6;
+    }
+
+    .hero-right .character-img {
+      width: 150px;
+    }
+
+    .sobre,
+    .como-funciona,
+    .beneficios,
+    .contato {
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+
+    .sobre,
+    .beneficios {
+      background-color: #00527d;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 304 304' width='304' height='304'%3E%3Cpath fill='%23ffffff' fill-opacity='0.03' d='M44.1 224a5 5 0 1 1 0 2H0v-2h44.1zm160 48a5 5 0 1 1 0 2H82v-2h122.1zm57.8-46a5 5 0 1 1 0-2H304v2h-42.1zm0 16a5 5 0 1 1 0-2H304v2h-42.1zm6.2-114a5 5 0 1 1 0 2h-86.2a5 5 0 1 1 0-2h86.2zm-256-48a5 5 0 1 1 0 2H0v-2h12.1zm185.8 34a5 5 0 1 1 0-2h86.2a5 5 0 1 1 0 2h-86.2zM258 12.1a5 5 0 1 1-2 0V0h2v12.1zm-64 208a5 5 0 1 1-2 0v-54.2a5 5 0 1 1 2 0v54.2zm48-198.2V80h62v2h-64V21.9a5 5 0 1 1 2 0zm16 16V64h46v2h-48V37.9a5 5 0 1 1 2 0zm-128 96V208h16v12.1a5 5 0 1 1-2 0V210h-16v-76.1a5 5 0 1 1 2 0zm-5.9-21.9a5 5 0 1 1 0 2H114v48H85.9a5 5 0 1 1 0-2H112v-48h12.1zm-6.2 130a5 5 0 1 1 0-2H176v-74.1a5 5 0 1 1 2 0V242h-60.1zm-16-64a5 5 0 1 1 0-2H114v48h10.1a5 5 0 1 1 0 2H112v-48h-10.1zM66 284.1a5 5 0 1 1-2 0V274H50v30h-2v-32h18v12.1zM236.1 176a5 5 0 1 1 0 2H226v94h48v32h-2v-30h-48v-98h12.1zm25.8-30a5 5 0 1 1 0-2H274v44.1a5 5 0 1 1-2 0V146h-10.1zm-64 96a5 5 0 1 1 0-2H208v-80h16v-14h-42.1a5 5 0 1 1 0-2H226v18h-16v80h-12.1zm86.2-210a5 5 0 1 1 0 2H272V0h2v32h10.1zM98 101.9V146H53.9a5 5 0 1 1 0-2H96v-42.1a5 5 0 1 1 2 0zM53.9 34a5 5 0 1 1 0-2H80V0h2v34H53.9zm60.1 3.9V66H82v64H69.9a5 5 0 1 1 0-2H80V64h32V37.9a5 5 0 1 1 2 0zM101.9 82a5 5 0 1 1 0-2H128V37.9a5 5 0 1 1 2 0V82h-28.1zm16-64a5 5 0 1 1 0-2H146v44.1a5 5 0 1 1-2 0V18h-26.1zm102.2 270a5 5 0 1 1 0 2H98v14h-2v-16h124.1zM242 149.9V160h16v34h-16v62h48v48h-2v-46h-48v-66h16v-30h-16v-12.1a5 5 0 1 1 2 0zM53.9 18a5 5 0 1 1 0-2H64V2H48V0h18v18H53.9zm112 32a5 5 0 1 1 0-2H192V0h50v2h-48v48h-28.1zm-48-48a5 5 0 0 1-9.8-2h2.07a3 3 0 1 0 5.66 0H178v34h-18V21.9a5 5 0 1 1 2 0V32h14V2h-58.1zm0 96a5 5 0 1 1 0-2H137l32-32h39V21.9a5 5 0 1 1 2 0V66h-40.17l-32 32H117.9zm28.1 90.1a5 5 0 1 1-2 0v-76.51L175.59 80H224V21.9a5 5 0 1 1 2 0V82h-49.59L146 112.41v75.69zm16 32a5 5 0 1 1-2 0v-99.51L184.59 96H300.1a5 5 0 0 1 3.9-3.9v2.07a3 3 0 0 0 0 5.66v2.07a5 5 0 0 1-3.9-3.9H185.41L162 121.41v98.69zm-144-64a5 5 0 1 1-2 0v-3.51l48-48V48h32V0h2v50H66v55.41l-48 48v2.69zM50 53.9v43.51l-48 48V208h26.1a5 5 0 1 1 0 2H0v-65.41l48-48V53.9a5 5 0 1 1 2 0zm-16 16V89.41l-34 34v-2.82l32-32V69.9a5 5 0 1 1 2 0zM12.1 32a5 5 0 1 1 0 2H9.41L0 43.41V40.6L8.59 32h3.51zm265.8 18a5 5 0 1 1 0-2h18.69l7.41-7.41v2.82L297.41 50H277.9zm-16 160a5 5 0 1 1 0-2H288v-71.41l16-16v2.82l-14 14V210h-28.1zm-208 32a5 5 0 1 1 0-2H64v-22.59L40.59 194H21.9a5 5 0 1 1 0-2H41.41L66 216.59V242H53.9zm150.2 14a5 5 0 1 1 0 2H96v-56.6L56.6 162H37.9a5 5 0 1 1 0-2h19.5L98 200.6V256h106.1zm-150.2 2a5 5 0 1 1 0-2H80v-46.59L48.59 178H21.9a5 5 0 1 1 0-2H49.41L82 208.59V258H53.9zM34 39.8v1.61L9.41 66H0v-2h8.59L32 40.59V0h2v39.8zM2 300.1a5 5 0 0 1 3.9 3.9H3.83A3 3 0 0 0 0 302.17V256h18v48h-2v-46H2v42.1zM34 241v63h-2v-62H0v-2h34v1zM17 18H0v-2h16V0h2v18h-1zm273-2h14v2h-16V0h2v16zm-32 273v15h-2v-14h-14v14h-2v-16h18v1zM0 92.1A5.02 5.02 0 0 1 6 97a5 5 0 0 1-6 4.9v-2.07a3 3 0 1 0 0-5.66V92.1zM80 272h2v32h-2v-32zm37.9 32h-2.07a3 3 0 0 0-5.66 0h-2.07a5 5 0 0 1 9.8 0zM5.9 0A5.02 5.02 0 0 1 0 5.9V3.83A3 3 0 0 0 3.83 0H5.9zm294.2 0h2.07A3 3 0 0 0 304 3.83V5.9a5 5 0 0 1-3.9-5.9zm3.9 300.1v2.07a3 3 0 0 0-1.83 1.83h-2.07a5 5 0 0 1 3.9-3.9zM97 100a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-48 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 96a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-144a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-96 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm96 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-32 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM49 36a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-32 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM33 68a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 240a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm80-176a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm112 176a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM17 180a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM17 84a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .sobre,
+    .sobre h2,
+    .beneficios,
+    .beneficios h2 {
+      color: #fff;
+    }
+
+    .sobre .container {
+      padding-left: 32px;
+      border-left: 4px solid white;
+    }
+
+    .sobre h2,
+    .beneficios h2 {
+      background-color: #fff;
+      border-radius: 999px;
+      width: 90px;
+      color: #00527d;
+      text-align: center;
+      padding: 8px 12px;
+    }
+
+    .beneficios h2 {
+      width: 250px;
+    }
+
+    .beneficios .container,
+    .contato .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sobre p,
+    .beneficios p {
+      line-height: 28px;
+    }
+
+    .sobre .mail-img {
+      width: 150px;
+    }
+
+    .sobre-conteudo,
+    .beneficios-conteudo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 56px;
+    }
+
+    .beneficios-conteudo {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .beneficios-conteudo img {
+      width: 32px;
+      background-color: #fff;
+      border-radius: 999px;
+      padding: 6px;
+      margin-right: 16px;
+    }
+
+    .beneficios-conteudo li p span {
+      margin-right: 5px;
+    }
+
+    .beneficios-conteudo li p {
+      display: flex;
+      align-items: center;
+    }
+
+    .beneficios li {
+      margin-top: 32px;
+      background-color: #0076b6;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      padding: 16px;
+      border-radius: 999px;
+    }
+
+    .destaque {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .como-funciona .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .como-funciona h2,
+    .contato h2 {
+      width: 250px;
+      text-align: center;
+      margin-bottom: 40px;
+      background-color: #00527d;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .como-funciona ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      column-gap: 56px;
+      row-gap: 32px;
+    }
+
+    .como-funciona li {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      max-width: 29%;
+      height: 176px;
+      width: 100%;
+      padding: 16px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .como-funciona li .icon-title {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .como-funciona .icon-bg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      background-color: #00527d;
+      border-radius: 999px;
+    }
+
+    .como-funciona .icon-bg img {
+      width: 28px;
+    }
+
+    .contato img {
+      width: 230px;
+    }
+
+    .contato .container>div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 56px;
+    }
+
+    .contato p {
+      font-size: 20px;
+    }
+
+    .contato a {
+      color: #0076b6;
+    }
+
+    .como-funciona span {
+      font-size: 18px;
+      font-weight: bold;
+      color: #00527d;
+    }
+
+    footer {
+      width: 100vw;
+      background-color: #0076b6;
+      color: #fff;
+      text-align: center;
+      padding: 16px 0;
+    }
+
+    .whatsapp-logo {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background-color: #31ba45;
+      padding: 12px 12px 8px 12px;
+      border-radius: 50%;
+      animation: shake-animation 9s infinite;
+    }
+
+    .whatsapp-logo img {
+      width: 35px;
+    }
+
+    @keyframes shake-animation {
+
+      0%,
+      22.22% {
+        transform: translateY(0);
+        /* Ponto inicial e final da animação */
+      }
+
+      5%,
+      15% {
+        transform: translateY(-6px);
+        /* Movimenta rapidamente para a esquerda */
+      }
+
+      10%,
+      20% {
+        transform: translateY(6px);
+        /* Movimenta rapidamente para a direita */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        max-width: 80%;
+      }
+
+      .cabecalho-bg .container {
+        justify-content: flex-start;
+        gap: 24px;
+        margin-bottom: 16px;
+      }
+
+      .cabecalho-bg .container nav ul li a {
+        font-size: 16px;
+        border-left: none;
+        padding-left: 0;
+        border-bottom: 3px solid #fff;
+        padding-bottom: 6px;
+      }
+
+      .logo {
+        width: 200px;
+        margin-left: -8px;
+      }
+
+      nav ul {
+        gap: 24px;
+      }
+
+      .hero {
+        gap: 48px;
+        padding: 32px 0;
+        justify-content: center;
+      }
+
+      .hero-left {
+        width: 100%;
+      }
+
+      .hero-left button {
+        width: 100%;
+      }
+
+      .hero-right {
+        width: 220px;
+        height: 220px;
+      }
+
+      .hero-right .character-img {
+        width: 135px;
+      }
+
+      .sobre,
+      .como-funciona,
+      .beneficios,
+      .contato {
+        padding: 32px 0;
+      }
+
+      .sobre-conteudo,
+      .beneficios-conteudo {
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .sobre .container {
+        border-left: none;
+        padding-left: 0;
+      }
+
+      .sobre h2,
+      .beneficios h2 {
+        width: 100%;
+      }
+
+      .sobre .mail-img {
+        width: 100px;
+      }
+
+      .como-funciona ul {
+        row-gap: 24px;
+      }
+
+      .como-funciona li {
+        height: 100%;
+        max-width: 100%;
+      }
+
+      .beneficios li {
+        border-radius: 16px;
+      }
+
+      .beneficios-conteudo li p {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .contato .container>div {
+        flex-direction: column;
+      }
+
+      .contato p {
+        font-size: 18px;
+      }
+
+      .contato .container>div {
+        gap: 32px;
+      }
+
+      .contato img {
+        width: 210px;
+      }
+
+      footer {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cabecalho-bg">
+    <div class="container"><img src="images/logo.png" alt="Logo Rádiomonitor" class="logo">
+      <nav>
+        <ul>
+          <li><a href="#como-funciona">Como funciona?</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <section class="hero container">
+    <div class="hero-left">
+      <h1>Solução Completa para Criação e Gestão de PIs e E-mails</h1>
+      <p>Transforme a gestão das suas campanhas com o Rádiomonitor: automatize a criação de PIs e o envio de e-mails e
+        monitore suas campanhas de forma rápida e centralizada!</p>
+      <button>Experimente agora</button>
+    </div>
+    <div class="hero-right"><img src="images/character.png" alt="Personagem" class="character-img"></div>
+  </section>
+  <main>
+    <section class="sobre">
+      <div class="container">
+        <h2>Sobre</h2>
+        <div class="sobre-conteudo">
+          <p>O Rádiomonitor é um sistema desenvolvido para simplificar a criação de PIs (Pedidos de Inserção) e o
+            gerenciamento de e-mails, tornando a comunicação entre agências de publicidade e emissoras de rádio mais
+            eficiente. Com uma média de <span class="destaque">1.000</span> e-mails enviados por agências todos os
+            meses, nosso sistema automatiza
+            todo esse processo, garantindo maior agilidade, precisão e controle no envio de campanhas publicitárias.
+            Deixe a
+            gestão das suas campanhas mais fácil e permita que sua equipe foque em outras tarefas prioritárias,
+            acelerando
+            resultados!</p>
+          <img src="images/emails.png" alt="E-mails" class="mail-img">
+        </div>
+      </div>
+    </section>
+    <section class="como-funciona" id="como-funciona">
+      <div class="container">
+        <h2>Funcionalidades</h2>
+        <ul>
+          <li>
+            <p>
+            <div class="icon-title">
+              <div class="icon-bg"><img src="images/setting.png" alt="Ícone"></div><span>Criação Automática de
+                PIs</span>
+            </div>O sistema monta as PIs automaticamente de acordo com as informações fornecidas pela agência.</p>
+          </li>
+          <li>
+            <p>
+            <div class="icon-title">
+              <div class="icon-bg"><img src="images/check.png" alt="Ícone"></div><span>Monitoramento de Campanha</span>
+            </div>O Rádiomonitor verifica se a rádio veiculou a campanha corretamente, garantindo a execução conforme
+            planejado.</p>
+          </li>
+          <li>
+            <p>
+            <div class="icon-title">
+              <div class="icon-bg"><img src="images/mail.png" alt="Ícone"></div><span>Envio Automático de E-mails</span>
+            </div>O envio de e-mails para as rádios é feito diretamente pela plataforma, sem precisar de intervenção
+            manual.</p>
+          </li>
+          <li>
+            <p>
+            <div class="icon-title">
+              <div class="icon-bg"><img src="images/money.png" alt="Ícone"></div><span>Gestão de Cobrança</span>
+            </div>O Rádiomonitor acompanha os status das PIs e notifica sobre os processos de cobrança da rádio.</p>
+          </li>
+          <li>
+            <p>
+            <div class="icon-title">
+              <div class="icon-bg"><img src="images/eye.png" alt="Ícone"></div><span>Acompanhamento de Status da
+                PI</span>
+            </div>Verifique em tempo real o status da PI – se foi aceita, recusada, veiculada, etc.</p>
+          </li>
+          <li>
+            <p>
+            <div class="icon-title">
+              <div class="icon-bg"><img src="images/file.png" alt="Ícone"></div><span>Envio Automático de
+                Material</span>
+            </div>O material da campanha é enviado junto com a PI, sem necessidade de anexar arquivos manualmente.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="beneficios">
+      <div class="container">
+        <h2>Benefícios</h2>
+        <div class="beneficios-conteudo">
+          <ul>
+            <li>
+              <p><img src="images/clock.png" alt="Ícone"><span class="destaque">Economia de Tempo:</span> Automatize
+                tarefas repetitivas e libere a equipe para
+                atividades estratégicas.</p>
+            </li>
+            <li>
+              <p><img src="images/down.png" alt="Ícone"><span class="destaque">Redução de Erros:</span> Com a automação,
+                os erros manuais são eliminados,
+                garantindo maior precisão nas
+                informações enviadas.</p>
+            </li>
+            <li>
+              <p><img src="images/up.png" alt="Ícone"><span class="destaque">Aumento de Eficiência:</span> Gerencie suas
+                campanhas publicitárias de forma
+                centralizada e com mais agilidade.</p>
+            </li>
+            <li>
+              <p><img src="images/control.png" alt="Ícone"><span class="destaque">Controle Completo:</span> Acompanhe o
+                status das suas PIs e o andamento das
+                campanhas a qualquer momento.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="contato" id="contato">
+      <div class="container">
+        <h2>Contato</h2>
+        <div><img src="images/woman.png" alt="Imagem">
+          <p>Possui alguma dúvida sobre nosso sistema? Converse conosco! Nossos atendentes estão preparados para
+            esclarecer quaisquer dúvidas. Entre em contato pelo e-mail <a
+              href="mailto:suporte@radiomonitor.com.br">suporte@radiomonitor.com.br</a> ou pelo nosso
+            WhatsApp <a
+              href="https://wa.me/+5511933461305/?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Rádiomonitor.">clicando
+              aqui</a>. Caso prefira ligar, nosso número é (11) 93346-1305.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <a href="https://wa.me/+5511933461305/?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20SpotHub." target="_blank"
+    class="whatsapp-logo"><img src="images/whatsapp.png" alt="Fale conosco!"></a>
+  <footer class="rodape"><span>© 2024 Rádiomonitor. Todos os direitos reservados.</span></footer>
+</body>
+
+<script></script>
+
+</html>
