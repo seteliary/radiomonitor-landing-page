@@ -403,17 +403,25 @@
       }
 
       .cabecalho-bg .container {
+        position: relative;
         justify-content: flex-start;
         gap: 24px;
-        margin-bottom: 16px;
       }
 
-      .cabecalho-bg .container nav ul li a {
+      .cabecalho-bg .container nav ul li a:not(.login-button) {
         font-size: 16px;
         border-left: none;
         padding-left: 0;
         border-bottom: 3px solid #fff;
         padding-bottom: 6px;
+      }
+
+      .login-button {
+        padding: 6px 12px;
+        margin-top: 16px;
+        position: absolute;
+        right: 0;
+        bottom: 8px;
       }
 
       .logo {
@@ -423,6 +431,7 @@
 
       nav ul {
         gap: 24px;
+        flex-direction: column;
       }
 
       .hero {
