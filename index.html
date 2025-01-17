@@ -664,6 +664,26 @@
   <footer class="rodape"><span>© 2024 Rádiomonitor. Todos os direitos reservados.</span></footer>
 </body>
 
-<script></script>
+<script>
+  // Espera o carregamento do conteúdo
+  document.addEventListener('DOMContentLoaded', function () {
+    // Seleciona o botão
+    const loginButton = document.querySelector('.login-button');
+
+    // Adiciona o ouvinte de evento de clique no botão
+    loginButton.addEventListener('click', function () {
+      // Verifica a URL atual
+      const currentUrl = window.location.href;
+
+      // Se a URL contiver "hom", redireciona para o URL "hom.spothub"
+      if (currentUrl.includes("hom")) {
+        window.location.href = "https://hom.radiomonitor.com.br/login.aspx";
+      } else {
+        // Caso contrário, redireciona para o URL padrão
+        window.location.href = "https://radiomonitor.com.br/login.aspx";
+      }
+    });
+  });
+</script>
 
 </html>
